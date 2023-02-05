@@ -14,8 +14,9 @@ func main() {
 		"http://amazon.com",
 	}
 
+	// go routine
 	for _, link := range links {
-		checkLink(link)
+		go checkLink(link)
 	}
 }
 
