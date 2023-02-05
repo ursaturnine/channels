@@ -32,9 +32,13 @@ func main() {
 	// that comes out of it to var, l"
 	for l := range c {
 		// function literal, or, anonymous function
+		// pass "l" as an argument, so the child routine
+		// has a copy, so when "l" in the main routine changes
+		// , the changed value will pass to the child
 		go func(link string) {
 			time.Sleep(time.Second)
 			checkLink(link, c)
+			// tell child routine to expect an argument, "l"
 		}(l)
 	}
 }
