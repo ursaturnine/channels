@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 )
 
 func main() {
@@ -30,7 +31,11 @@ func main() {
 	// "watch the channel, c, and assign the value
 	// that comes out of it to var, l"
 	for l := range c {
-		go checkLink(l, c)
+		// function literal, or, anonymous function
+		go func(link string) {
+			time.Sleep(time.Second)
+			checkLink(link, c)
+		}(l)
 	}
 }
 
