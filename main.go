@@ -27,9 +27,10 @@ func main() {
 	// blocking call -main routine won't finish w/o
 	// a child routine finishing first
 
-	// for {} is an inifinite loop
-	for {
-		go checkLink(<-c, c)
+	// "watch the channel, c, and assign the value
+	// that comes out of it to var, l"
+	for l := range c {
+		go checkLink(l, c)
 	}
 }
 
