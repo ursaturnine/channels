@@ -23,7 +23,14 @@ func main() {
 		go checkLink(link, c)
 	}
 
-	fmt.Println(<-c)
+	// main routine listening for a response from a channel
+	// blocking call -main routine won't finish w/o
+	// a child routine finishing first
+
+	// for {} is an inifinite loop
+	for {
+		go checkLink(<-c, c)
+	}
 }
 
 func checkLink(link string, c chan string) {
@@ -31,10 +38,10 @@ func checkLink(link string, c chan string) {
 
 	if err != nil {
 		fmt.Println(link, "might be down!")
-		c <- "Might be down I think"
+		c <- link
 		return
 	}
 
 	fmt.Println(link, "is up!")
-	c <- "Yup, it's up"
+	c <- link
 }
